@@ -1,1 +1,1 @@
-web: node public/index.js
+web: npm run start:prod
