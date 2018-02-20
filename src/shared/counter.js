@@ -1,9 +1,11 @@
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min
-}
 
-export function fetchCounter(callback) {
+export function fetchCounter(paramString = '', callback) {
     setTimeout(() => {
-        callback(getRandomInt(1, 100))
+        callback(paramString.split(',').map(item => {
+            return {
+                text: item.startsWith('-') ? item.substr(1) : item,
+                completed: item.startsWith('-')
+            };
+        }))
     }, 500)
 }

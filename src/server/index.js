@@ -40,11 +40,11 @@ export default ({ clientStats }) => async (req, res) => {
           `
       }
 
-    fetchCounter(apiResult => {
-        const params = qs.parse(req.query)
-        const counter = parseInt(params.counter, 10) || 0
+    const params = qs.parse(req.query)
+    fetchCounter(params.id, apiResult => {
+
         // Compile an initial state
-        let preloadedState = { counter }
+        let preloadedState = { todos: apiResult }
      
         // Create a new Redux store instance
         const store = createStore(todoApp, preloadedState)
@@ -61,14 +61,5 @@ export default ({ clientStats }) => async (req, res) => {
         // Send the rendered page back to the client
         res.send(renderFullPage(appString, finalState))
 
-        // const chunkNames = flushChunkNames();
-        // const { js, styles, cssHash } = flushChunks(clientStats, { chunkNames });
-
-        // res.render('index', {
-        //     appString,
-        //     js,
-        //     styles,
-        //     cssHash
-        // });
     });
 };

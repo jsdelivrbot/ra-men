@@ -6,6 +6,7 @@ import App from '../shared/containers/App'
 import todoApp from '../shared/reducers'
 
 const preloadedState = window.__PRELOADED_STATE__
+console.log(preloadedState)
 delete window.__PRELOADED_STATE__
 const store = createStore(todoApp, preloadedState)
 
