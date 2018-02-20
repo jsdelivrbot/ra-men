@@ -1,12 +1,10 @@
-# Node build artifacts
+# IntelliJ
+.idea
+
+# NodeJS
 node_modules
-npm-debug.log
 
-# Local development
-*.env
-*.dev
-.DS_Store
-
-# Docker
-Dockerfile
-docker-compose.yml
+# Project
+public/**.json
+public/assets
+public/index.js
