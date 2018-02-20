@@ -6,8 +6,8 @@ import flushChunks from 'webpack-flush-chunks';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { fetchCounter } from '../shared/counter'
-
-import App from '../shared/App';
+import todoApp from '../shared/reducers'
+import App from '../shared/containers/App';
 
 /**
  * Provides the server side rendered app. In development environment, this method is called by
@@ -27,13 +27,14 @@ export default ({ clientStats }) => async (req, res) => {
               <title>Redux Universal Example</title>
             </head>
             <body>
-              <div id="root">${html}</div>
+              <div id="react-root">${html}</div>
               <script>
                 // WARNING: See the following for security issues around embedding JSON in HTML:
                 // http://redux.js.org/docs/recipes/ServerRendering.html#security-considerations
                 window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
               </script>
-              <script src="/static/bundle.js"></script>
+              <script src="bootstrap.js"></script>
+              <script src="app.client.js"></script>
             </body>
           </html>
           `
@@ -46,7 +47,7 @@ export default ({ clientStats }) => async (req, res) => {
         let preloadedState = { counter }
      
         // Create a new Redux store instance
-        const store = createStore(App, preloadedState)
+        const store = createStore(todoApp, preloadedState)
      
         const appString = ReactDOM.renderToString(
             <Provider store={store}>
@@ -58,7 +59,7 @@ export default ({ clientStats }) => async (req, res) => {
         const finalState = store.getState()
          
         // Send the rendered page back to the client
-        res.send(renderFullPage(html, finalState))
+        res.send(renderFullPage(appString, finalState))
 
         // const chunkNames = flushChunkNames();
         // const { js, styles, cssHash } = flushChunks(clientStats, { chunkNames });
