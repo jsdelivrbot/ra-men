@@ -4,7 +4,6 @@
   "description": "Server side rendering template for React 16",
   "main": "src/index.js",
   "scripts": {
-    "heroku-prebuild": "heroku config:set PORT=80",
     "start": "cross-env NODE_ENV=development babel-node src/index",
     "start:prod": "npm run build && node public/index.js",
     "watch": "cross-env NODE_ENV=development babel-watch src/index",
