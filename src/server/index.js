@@ -22,7 +22,7 @@ export default ({ clientStats }) => async (req, res) => {
     var renderFullPage = function (html, preloadedState) {
         return `
           <!doctype html>
-          <html>
+          <html lang="en">
             <head>
               <title>Redux Universal Example</title>
             </head>
