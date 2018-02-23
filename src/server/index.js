@@ -44,7 +44,19 @@ export default ({ clientStats }) => async (req, res) => {
     fetchCounter(params.id, apiResult => {
 
         // Compile an initial state
-        let preloadedState = { todos: apiResult }
+        let preloadedState = { 
+            todos: apiResult,
+            grid: [
+                {
+                    chars: [
+                        { text: 'A', confirmed: true, selected: false, hovered: false },
+                        { text: 'B', confirmed: false, selected: false, hovered: false },
+                        { text: 'C', confirmed: false, selected: true, hovered: false },
+                        { text: 'D', confirmed: false, selected: false, hovered: true }
+                    ]
+                }
+            ]
+        }
      
         // Create a new Redux store instance
         const store = createStore(todoApp, preloadedState)

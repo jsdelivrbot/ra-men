@@ -5,11 +5,12 @@ import { addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters } from '../
 import AddTodo from '../components/AddTodo'
 import TodoList from '../components/TodoList'
 import Footer from '../components/Footer'
+import WordPanel from '../components/WordPanel'
 
 class App extends Component {
     render() {
         // Injected by connect() call:
-        const { dispatch, visibleTodos, visibilityFilter } = this.props
+        const { dispatch, visibleTodos, visibilityFilter, grid } = this.props
         return (
             <div>
                 <AddTodo
@@ -26,6 +27,11 @@ class App extends Component {
                     onFilterChange={nextFilter =>
                         dispatch(setVisibilityFilter(nextFilter))
                     } />
+                <WordPanel
+                    grid={grid}
+                    onMouseDown={(row, col) =>
+                        dispatch(selectStart(row, col))
+                    } />
             </div>
         )
     }
@@ -40,7 +46,15 @@ App.propTypes = {
         'SHOW_ALL',
         'SHOW_COMPLETED',
         'SHOW_ACTIVE'
-    ]).isRequired
+    ]).isRequired,
+    grid: PropTypes.arrayOf(PropTypes.shape({
+        chars: PropTypes.arrayOf(PropTypes.shape({
+            text : PropTypes.string.isRequired,
+            confirmed: PropTypes.bool.isRequired,
+            selected: PropTypes.bool.isRequired,
+            hovered: PropTypes.bool.isRequired
+        }).isRequired).isRequired
+    }).isRequired).isRequired
 }
 
 function selectTodos(todos, filter) {
@@ -59,7 +73,8 @@ function selectTodos(todos, filter) {
 function select(state) {
     return {
         visibleTodos: selectTodos(state.todos, state.visibilityFilter),
-        visibilityFilter: state.visibilityFilter
+        visibilityFilter: state.visibilityFilter,
+        grid: state.grid
     }
 }
 

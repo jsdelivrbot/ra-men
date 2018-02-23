@@ -34,9 +34,14 @@ function todos(state = [], action) {
     }
 }
 
+function grid(state = [], action) {
+    return state;
+}
+
 const todoApp = combineReducers({
     visibilityFilter,
-    todos
+    todos,
+    grid
 })
 
 export default todoApp
