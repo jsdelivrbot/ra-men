@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters, selectStart, selectEnd } from '../actions'
+import { addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters, selectStart, selectEnd, moveEnter, moveLeave } from '../actions'
 import AddTodo from '../components/AddTodo'
 import TodoList from '../components/TodoList'
 import Footer from '../components/Footer'
@@ -35,6 +35,12 @@ class App extends Component {
                     }
                     onMouseUp={(row, col) =>
                         dispatch(selectEnd(row, col))
+                    }
+                    onMouseEnter={(row, col) =>
+                        dispatch(moveEnter(row, col))
+                    }
+                    onMouseLeave={(row, col) =>
+                        dispatch(moveLeave(row, col))
                     }/>
             </div>
         )

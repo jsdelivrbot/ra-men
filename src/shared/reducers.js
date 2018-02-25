@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import {ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters, SELECT_START, SELECT_END} from './actions'
+import {ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters, SELECT_START, SELECT_END, MOVE_ENTER, MOVE_LEAVE} from './actions'
 const { SHOW_ALL } = VisibilityFilters
 
 function visibilityFilter(state = SHOW_ALL, action) {
@@ -41,6 +41,14 @@ function grid(state = [], action) {
             break;
 
         case SELECT_END:
+            console.log(action);
+            break;
+
+        case MOVE_ENTER:
+            console.log(action);
+            break;
+
+        case MOVE_LEAVE:
             console.log(action);
             break;
 

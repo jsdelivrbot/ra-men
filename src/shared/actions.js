@@ -7,6 +7,8 @@ export const TOGGLE_TODO = 'TOGGLE_TODO';
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 export const SELECT_START = 'SELECT_START';
 export const SELECT_END = 'SELECT_END';
+export const MOVE_ENTER = 'MOVE_ENTER';
+export const MOVE_LEAVE = 'MOVE_LEAVE';
 
 /*
  * 其它的常量
@@ -45,6 +47,22 @@ export function selectStart(row, col) {
 export function selectEnd(row, col) {
     return {
         type: SELECT_END,
+        row: row,
+        col: col
+    }
+}
+
+export function moveEnter(row, col) {
+    return {
+        type: MOVE_ENTER,
+        row: row,
+        col: col
+    }
+}
+
+export function moveLeave(row, col) {
+    return {
+        type: MOVE_LEAVE,
         row: row,
         col: col
     }

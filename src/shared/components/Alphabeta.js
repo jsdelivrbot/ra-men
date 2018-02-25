@@ -25,7 +25,10 @@ export default class Alphabeta extends Component {
 }
 
 Alphabeta.propTypes = {
-    // onMouseEnter: PropTypes.func.isRequired,
+    onMouseDown: PropTypes.func.isRequired,
+    onMouseUp: PropTypes.func.isRequired,
+    onMouseEnter: PropTypes.func.isRequired,
+    onMouseLeave: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired,
     confirmed: PropTypes.bool.isRequired,
     selected: PropTypes.bool.isRequired,
