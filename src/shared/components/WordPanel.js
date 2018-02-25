@@ -7,13 +7,14 @@ export default class WordPanel extends Component {
         return (
             <div>
             {this.props.grid.map((row, rowIndex) =>
-                <ul key={rowIndex}>
+                <div key={rowIndex}>
                 {row.chars.map((char, colIndex) =>
                     <Alphabeta {...char}
                         key={rowIndex + '_' + colIndex}
-                        onMouseDown={() => this.props.onMouseDown(rowIndex, colIndex)} />
+                        onMouseDown={() => this.props.onMouseDown(rowIndex, colIndex)}
+                        onMouseUp={() => this.props.onMouseUp(rowIndex, colIndex)} />
                 )}
-                </ul>
+                </div>
             )}
             </div>
         )
@@ -22,6 +23,7 @@ export default class WordPanel extends Component {
 
 WordPanel.propTypes = {
     onMouseDown: PropTypes.func.isRequired,
+    onMouseUp: PropTypes.func.isRequired,
     grid: PropTypes.arrayOf(PropTypes.shape({
         chars: PropTypes.arrayOf(PropTypes.shape({
             text : PropTypes.string.isRequired,

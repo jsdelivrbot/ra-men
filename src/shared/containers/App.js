@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters } from '../actions'
+import { addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters, selectStart, selectEnd } from '../actions'
 import AddTodo from '../components/AddTodo'
 import TodoList from '../components/TodoList'
 import Footer from '../components/Footer'
 import WordPanel from '../components/WordPanel'
+import '../app.styl'
 
 class App extends Component {
     render() {
@@ -31,7 +32,10 @@ class App extends Component {
                     grid={grid}
                     onMouseDown={(row, col) =>
                         dispatch(selectStart(row, col))
-                    } />
+                    }
+                    onMouseUp={(row, col) =>
+                        dispatch(selectEnd(row, col))
+                    }/>
             </div>
         )
     }
@@ -78,5 +82,4 @@ function select(state) {
     }
 }
 
-// 包装 component ，注入 dispatch 和 state 到其默认的 connect(select)(App) 中；
 export default connect(select)(App)

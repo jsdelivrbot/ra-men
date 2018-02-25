@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default class Alphabeta extends Component {
     render() {
         return (
-            <li
+            <span
                 onMouseDown={this.props.onMouseDown}
                 onMouseUp={this.props.onMouseUp}
                 onTouchStart={this.props.onMouseDown}
@@ -19,7 +19,7 @@ export default class Alphabeta extends Component {
                             : (this.props.hovered ? 'lightblue' : 'white'))
                 }}>
                 {this.props.text}
-            </li>
+            </span>
         )
     }
 }

@@ -5,6 +5,8 @@
 export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
+export const SELECT_START = 'SELECT_START';
+export const SELECT_END = 'SELECT_END';
 
 /*
  * 其它的常量
@@ -30,4 +32,20 @@ export function toggleTodo(index) {
 
 export function setVisibilityFilter(filter) {
     return { type: SET_VISIBILITY_FILTER, filter }
+}
+
+export function selectStart(row, col) {
+    return {
+        type: SELECT_START,
+        row: row,
+        col: col
+    }
+}
+
+export function selectEnd(row, col) {
+    return {
+        type: SELECT_END,
+        row: row,
+        col: col
+    }
 }
