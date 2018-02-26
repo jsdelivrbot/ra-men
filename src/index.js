@@ -61,7 +61,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 log('info', 'Configuring server engine...');
+log('info', `port=${process.env.PORT}`);
 app.set('view engine', 'ejs');
-app.set('port', process.env.PORT || 3000);
+app.set('port', (process.env.PORT && process.env.PORT !== 'undefined') ? process.env.PORT : 3000);
 
 app.listen(app.get('port'), () => log('info', `Server listening on port ${app.get('port')}...`));

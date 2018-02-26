@@ -2,8 +2,12 @@ import React from 'react';
 import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
+import { consolidateStreamedStyles } from 'styled-components'
+
 import App from '../shared/containers/App'
 import todoApp from '../shared/reducers'
+
+consolidateStreamedStyles();
 
 const preloadedState = window.__PRELOADED_STATE__
 console.log(preloadedState)

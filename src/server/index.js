@@ -5,6 +5,9 @@ import { flushChunkNames } from 'react-universal-component/server';
 import flushChunks from 'webpack-flush-chunks';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import { renderToNodeStream } from 'react-dom/server'
+import styled, { ServerStyleSheet } from 'styled-components'
+
 import { fetchCounter } from '../shared/counter'
 import todoApp from '../shared/reducers'
 import App from '../shared/containers/App';
@@ -24,13 +27,11 @@ export default ({ clientStats }) => async (req, res) => {
           <!doctype html>
           <html lang="en">
             <head>
-              <title>Redux Universal Example</title>
+              <title>word-search</title>
             </head>
             <body>
               <div id="react-root">${html}</div>
               <script>
-                // WARNING: See the following for security issues around embedding JSON in HTML:
-                // http://redux.js.org/docs/recipes/ServerRendering.html#security-considerations
                 window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
               </script>
               <script src="bootstrap.js"></script>
@@ -60,18 +61,29 @@ export default ({ clientStats }) => async (req, res) => {
      
         // Create a new Redux store instance
         const store = createStore(todoApp, preloadedState)
-     
-        const appString = ReactDOM.renderToString(
-            <Provider store={store}>
-                <App />
-            </Provider>
-        );
 
         // Grab the initial state from our Redux store
         const finalState = store.getState()
          
         // Send the rendered page back to the client
-        res.send(renderFullPage(appString, finalState))
+        // res.send(renderFullPage(appString, finalState))
+
+        // streaming response
+        res.write('<!DOCTYPE html><html lang="en"><head><title>word-search</title></head><body><div id="react-root">')
+        const sheet = new ServerStyleSheet()
+        const jsx = sheet.collectStyles(<Provider store={store}><App /></Provider>)
+        // Interleave the HTML stream with <style> tags
+        const stream = sheet.interleaveWithNodeStream(
+          renderToNodeStream(jsx)
+        )
+        stream.pipe(res, { end: false })
+        stream.on('end', () => res.end(`</div><script>
+        window.__PRELOADED_STATE__ = ${JSON.stringify(finalState).replace(/</g, '\\u003c')}
+            </script>
+            <script src="bootstrap.js"></script>
+            <script src="app.client.js"></script>
+            </body>
+        </html>`));
 
     });
 };
