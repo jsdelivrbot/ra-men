@@ -14,20 +14,20 @@ class App extends Component {
         const { dispatch, visibleTodos, visibilityFilter, grid } = this.props
         return (
             <div>
-                <AddTodo
-                    onAddClick={text =>
-                        dispatch(addTodo(text))
-                    } />
-                <TodoList
-                    todos={visibleTodos}
-                    onTodoClick={index =>
-                        dispatch(toggleTodo(index))
-                    } />
-                <Footer
-                    filter={visibilityFilter}
-                    onFilterChange={nextFilter =>
-                        dispatch(setVisibilityFilter(nextFilter))
-                    } />
+                {/*<AddTodo*/}
+                    {/*onAddClick={text =>*/}
+                        {/*dispatch(addTodo(text))*/}
+                    {/*} />*/}
+                {/*<TodoList*/}
+                    {/*todos={visibleTodos}*/}
+                    {/*onTodoClick={index =>*/}
+                        {/*dispatch(toggleTodo(index))*/}
+                    {/*} />*/}
+                {/*<Footer*/}
+                    {/*filter={visibilityFilter}*/}
+                    {/*onFilterChange={nextFilter =>*/}
+                        {/*dispatch(setVisibilityFilter(nextFilter))*/}
+                    {/*} />*/}
                 <WordPanel
                     grid={grid}
                     onMouseDown={(row, col) =>

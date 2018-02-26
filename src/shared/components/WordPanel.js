@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components'
 import Alphabeta from './Alphabeta'
 
 export default class WordPanel extends Component {
     render() {
+        const AlphabetaRow = styled.div`
+            line-height: 38px;
+        `;
         return (
             <div>
             {this.props.grid.map((row, rowIndex) =>
-                <div key={rowIndex}>
+                <AlphabetaRow key={rowIndex}>
                 {row.chars.map((char, colIndex) =>
                     <Alphabeta {...char}
                         key={rowIndex + '_' + colIndex}
@@ -17,7 +21,7 @@ export default class WordPanel extends Component {
                         onMouseLeave={() => this.props.onMouseLeave(rowIndex, colIndex)}
                     />
                 )}
-                </div>
+                </AlphabetaRow>
             )}
             </div>
         )

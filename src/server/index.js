@@ -22,38 +22,88 @@ import App from '../shared/containers/App';
  */
 export default ({ clientStats }) => async (req, res) => {
 
-    var renderFullPage = function (html, preloadedState) {
-        return `
-          <!doctype html>
-          <html lang="en">
-            <head>
-              <title>word-search</title>
-            </head>
-            <body>
-              <div id="react-root">${html}</div>
-              <script>
-                window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
-              </script>
-              <script src="bootstrap.js"></script>
-              <script src="app.client.js"></script>
-            </body>
-          </html>
-          `
-      }
-
     const params = qs.parse(req.query)
     fetchCounter(params.id, apiResult => {
-
+        // 0: init 1: ssp 2: sp 3: sep 4: vld 5: vldh
         // Compile an initial state
         let preloadedState = { 
             todos: apiResult,
             grid: [
                 {
                     chars: [
-                        { text: 'A', confirmed: true, selected: false, hovered: false },
+                        { text: 'A', confirmed: false, selected: false, hovered: false },
                         { text: 'B', confirmed: false, selected: false, hovered: false },
-                        { text: 'C', confirmed: false, selected: true, hovered: false },
-                        { text: 'D', confirmed: false, selected: false, hovered: true }
+                        { text: 'C', confirmed: false, selected: false, hovered: false },
+                        { text: 'D', confirmed: false, selected: false, hovered: false },
+                        { text: 'E', confirmed: false, selected: false, hovered: false },
+                        { text: 'F', confirmed: false, selected: false, hovered: false },
+                        { text: 'G', confirmed: false, selected: false, hovered: false }
+                    ]
+                },
+                {
+                    chars: [
+                        { text: 'A', confirmed: false, selected: false, hovered: false },
+                        { text: 'B', confirmed: false, selected: false, hovered: false },
+                        { text: 'C', confirmed: false, selected: false, hovered: false },
+                        { text: 'D', confirmed: false, selected: false, hovered: false },
+                        { text: 'E', confirmed: false, selected: false, hovered: false },
+                        { text: 'F', confirmed: false, selected: false, hovered: false },
+                        { text: 'G', confirmed: false, selected: false, hovered: false }
+                    ]
+                },
+                {
+                    chars: [
+                        { text: 'A', confirmed: false, selected: false, hovered: false },
+                        { text: 'B', confirmed: false, selected: false, hovered: false },
+                        { text: 'C', confirmed: false, selected: false, hovered: false },
+                        { text: 'D', confirmed: false, selected: false, hovered: false },
+                        { text: 'E', confirmed: false, selected: false, hovered: false },
+                        { text: 'F', confirmed: false, selected: false, hovered: false },
+                        { text: 'G', confirmed: false, selected: false, hovered: false }
+                    ]
+                },
+                {
+                    chars: [
+                        { text: 'A', confirmed: false, selected: false, hovered: false },
+                        { text: 'B', confirmed: false, selected: false, hovered: false },
+                        { text: 'C', confirmed: false, selected: false, hovered: false },
+                        { text: 'D', confirmed: false, selected: false, hovered: false },
+                        { text: 'E', confirmed: false, selected: false, hovered: false },
+                        { text: 'F', confirmed: false, selected: false, hovered: false },
+                        { text: 'G', confirmed: false, selected: false, hovered: false }
+                    ]
+                },
+                {
+                    chars: [
+                        { text: 'A', confirmed: false, selected: false, hovered: false },
+                        { text: 'B', confirmed: false, selected: false, hovered: false },
+                        { text: 'C', confirmed: false, selected: false, hovered: false },
+                        { text: 'D', confirmed: false, selected: false, hovered: false },
+                        { text: 'E', confirmed: false, selected: false, hovered: false },
+                        { text: 'F', confirmed: false, selected: false, hovered: false },
+                        { text: 'G', confirmed: false, selected: false, hovered: false }
+                    ]
+                },
+                {
+                    chars: [
+                        { text: 'A', confirmed: false, selected: false, hovered: false },
+                        { text: 'B', confirmed: false, selected: false, hovered: false },
+                        { text: 'C', confirmed: false, selected: false, hovered: false },
+                        { text: 'D', confirmed: false, selected: false, hovered: false },
+                        { text: 'E', confirmed: false, selected: false, hovered: false },
+                        { text: 'F', confirmed: false, selected: false, hovered: false },
+                        { text: 'G', confirmed: false, selected: false, hovered: false }
+                    ]
+                },
+                {
+                    chars: [
+                        { text: 'A', confirmed: false, selected: false, hovered: false },
+                        { text: 'B', confirmed: false, selected: false, hovered: false },
+                        { text: 'C', confirmed: false, selected: false, hovered: false },
+                        { text: 'D', confirmed: false, selected: false, hovered: false },
+                        { text: 'E', confirmed: false, selected: false, hovered: false },
+                        { text: 'F', confirmed: false, selected: false, hovered: false },
+                        { text: 'G', confirmed: false, selected: false, hovered: false }
                     ]
                 }
             ]
@@ -65,9 +115,6 @@ export default ({ clientStats }) => async (req, res) => {
         // Grab the initial state from our Redux store
         const finalState = store.getState()
          
-        // Send the rendered page back to the client
-        // res.send(renderFullPage(appString, finalState))
-
         // streaming response
         res.write('<!DOCTYPE html><html lang="en"><head><title>word-search</title></head><body><div id="react-root">')
         const sheet = new ServerStyleSheet()
@@ -78,12 +125,10 @@ export default ({ clientStats }) => async (req, res) => {
         )
         stream.pipe(res, { end: false })
         stream.on('end', () => res.end(`</div><script>
-        window.__PRELOADED_STATE__ = ${JSON.stringify(finalState).replace(/</g, '\\u003c')}
+            window.__PRELOADED_STATE__ = ${JSON.stringify(finalState).replace(/</g, '\\u003c')}
             </script>
             <script src="bootstrap.js"></script>
             <script src="app.client.js"></script>
-            </body>
-        </html>`));
-
+            </body></html>`));
     });
 };
