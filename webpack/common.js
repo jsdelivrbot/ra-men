@@ -1,4 +1,5 @@
 const join = require('path').join;
+const webpack = require('webpack');
 
 module.exports = {
     output: {
@@ -17,5 +18,13 @@ module.exports = {
             test: /\.js$/,
             use: 'babel-loader'
         }]
-    }
+    },
+    plugins: [
+        new webpack.DefinePlugin({
+            "styled-components" : {
+                ssr: true, 
+                displayName: true 
+            }
+        })
+    ]
 };

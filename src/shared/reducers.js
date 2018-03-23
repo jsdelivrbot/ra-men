@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import {ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters, SELECT_START, SELECT_END, MOVE_ENTER, MOVE_LEAVE} from './actions'
+import { ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters, SELECT_START, SELECT_END, MOVE_ENTER, MOVE_LEAVE } from './actions'
 const { SHOW_ALL } = VisibilityFilters
 
 function visibilityFilter(state = SHOW_ALL, action) {
@@ -35,27 +35,64 @@ function todos(state = [], action) {
 }
 
 function grid(state = [], action) {
+    var result;
     switch (action.type) {
         case SELECT_START:
-            console.log(action);
+            result = state.map((row, rowIdx) => {
+                return {
+                    chars: row.chars.map((cell, colIdx) => {
+                        return {
+                            ...cell
+                        }
+                    })
+                }
+            })
             break;
 
         case SELECT_END:
-            console.log(action);
+            // console.log(action);
+            result = state.map((row, rowIdx) => {
+                return {
+                    chars: row.chars.map((cell, colIdx) => {
+                        return {
+                            ...cell
+                        }
+                    })
+                }
+            })
             break;
 
         case MOVE_ENTER:
-            console.log(action);
+            result = state.map((row, rowIdx) => {
+                return {
+                    chars: row.chars.map((cell, colIdx) => {
+                        return {
+                            ...cell,
+                            hovered: rowIdx === action.row && colIdx === action.col
+                        }
+                    })
+                }
+            })
+            // console.log(result);
             break;
 
         case MOVE_LEAVE:
-            console.log(action);
+            result = state.map((row, rowIdx) => {
+                return {
+                    chars: row.chars.map((cell, colIdx) => {
+                        return {
+                            ...cell,
+                            hovered: rowIdx === action.row && colIdx === action.col ? !cell.hovered : false
+                        }
+                    })
+                }
+            })
             break;
 
         default:
             return state;
     }
-    return state;
+    return result;
 }
 
 const todoApp = combineReducers({
