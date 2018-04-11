@@ -1,6 +1,6 @@
 {
   "name": "ra-men",
-  "description": "A heroku Node.js app using Express 4, React 16",
+  "description": "a PWA AMP playground by react",
   "repository": "https://github.com/hydraslay/ra-men",
   "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
   "keywords": ["node", "express", "heroku", "React"],

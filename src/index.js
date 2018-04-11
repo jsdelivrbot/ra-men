@@ -1,68 +1,106 @@
-import express from 'express';
-import { join } from 'path';
-import { log } from 'winston';
+import React from 'react';
+import { Provider } from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
+import promise from 'redux-promise';
+import createLogger from 'redux-logger';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import todoApp from './reducers';
 
-/**
- * Configures hot reloading and assets paths for local development environment.
- * Use the `npm start` command to start the local development server.
- *
- * @param app Express app
- */
-const configureDevelopment = app => {
-    const clientConfig = require('../webpack/client');
-    const serverConfig = require('../webpack/server');
-    const publicPath = clientConfig.output.publicPath;
-    const outputPath = clientConfig.output.path;
-
-    const multiCompiler = require('webpack')([clientConfig, serverConfig]);
-    const clientCompiler = multiCompiler.compilers[0];
-
-    app.use(require('webpack-dev-middleware')(multiCompiler, {publicPath}));
-    app.use(require('webpack-hot-middleware')(clientCompiler));
-
-    app.use(publicPath, express.static(outputPath));
-
-    app.use(require('webpack-hot-server-middleware')(multiCompiler, {
-        serverRendererOptions: { outputPath }
-    }));
-
-    app.set('views', join(__dirname, '../public/views'));
-};
-
-/**
- * Configures assets paths for production environment.
- * This environment is used in deployment and inside the docker container.
- * Use the `npm run build` command to create a production build.
- *
- * @param app Express app
- */
-const configureProduction = app => {
-    const clientStats = require('./assets/stats.json');
-    const serverRender = require('./assets/app.server.js').default;
-    const publicPath = '/';
-    const outputPath = join(__dirname, 'assets');
-
-    app.use(publicPath, express.static(outputPath));
-    app.use(serverRender({
-        clientStats,
-        outputPath
-    }));
-
-    app.set('views', join(__dirname, 'views'));
-};
-
-const app = express();
-
-log('info', `Configuring server for environment: ${process.env.NODE_ENV}...`);
-if (process.env.NODE_ENV === 'development') {
-    configureDevelopment(app);
-} else {
-    configureProduction(app);
+let preloadedState = { 
+    todos: [{}],
+    grid: [
+        {
+            chars: [
+                { text: 'A', confirmed: false, selected: false, hovered: false },
+                { text: 'B', confirmed: false, selected: false, hovered: false },
+                { text: 'C', confirmed: false, selected: false, hovered: false },
+                { text: 'D', confirmed: false, selected: false, hovered: false },
+                { text: 'E', confirmed: false, selected: false, hovered: false },
+                { text: 'F', confirmed: false, selected: false, hovered: false },
+                { text: 'G', confirmed: false, selected: false, hovered: false }
+            ]
+        },
+        {
+            chars: [
+                { text: 'A', confirmed: false, selected: false, hovered: false },
+                { text: 'B', confirmed: false, selected: false, hovered: false },
+                { text: 'C', confirmed: false, selected: false, hovered: false },
+                { text: 'D', confirmed: false, selected: false, hovered: false },
+                { text: 'E', confirmed: false, selected: false, hovered: false },
+                { text: 'F', confirmed: false, selected: false, hovered: false },
+                { text: 'G', confirmed: false, selected: false, hovered: false }
+            ]
+        },
+        {
+            chars: [
+                { text: 'A', confirmed: false, selected: false, hovered: false },
+                { text: 'B', confirmed: false, selected: false, hovered: false },
+                { text: 'C', confirmed: false, selected: false, hovered: false },
+                { text: 'D', confirmed: false, selected: false, hovered: false },
+                { text: 'E', confirmed: false, selected: false, hovered: false },
+                { text: 'F', confirmed: false, selected: false, hovered: false },
+                { text: 'G', confirmed: false, selected: false, hovered: false }
+            ]
+        },
+        {
+            chars: [
+                { text: 'A', confirmed: false, selected: false, hovered: false },
+                { text: 'B', confirmed: false, selected: false, hovered: false },
+                { text: 'C', confirmed: false, selected: false, hovered: false },
+                { text: 'D', confirmed: false, selected: false, hovered: false },
+                { text: 'E', confirmed: false, selected: false, hovered: false },
+                { text: 'F', confirmed: false, selected: false, hovered: false },
+                { text: 'G', confirmed: false, selected: false, hovered: false }
+            ]
+        },
+        {
+            chars: [
+                { text: 'A', confirmed: false, selected: false, hovered: false },
+                { text: 'B', confirmed: false, selected: false, hovered: false },
+                { text: 'C', confirmed: false, selected: false, hovered: false },
+                { text: 'D', confirmed: false, selected: false, hovered: false },
+                { text: 'E', confirmed: false, selected: false, hovered: false },
+                { text: 'F', confirmed: false, selected: false, hovered: false },
+                { text: 'G', confirmed: false, selected: false, hovered: false }
+            ]
+        },
+        {
+            chars: [
+                { text: 'A', confirmed: false, selected: false, hovered: false },
+                { text: 'B', confirmed: false, selected: false, hovered: false },
+                { text: 'C', confirmed: false, selected: false, hovered: false },
+                { text: 'D', confirmed: false, selected: false, hovered: false },
+                { text: 'E', confirmed: false, selected: false, hovered: false },
+                { text: 'F', confirmed: false, selected: false, hovered: false },
+                { text: 'G', confirmed: false, selected: false, hovered: false }
+            ]
+        },
+        {
+            chars: [
+                { text: 'A', confirmed: false, selected: false, hovered: false },
+                { text: 'B', confirmed: false, selected: false, hovered: false },
+                { text: 'C', confirmed: false, selected: false, hovered: false },
+                { text: 'D', confirmed: false, selected: false, hovered: false },
+                { text: 'E', confirmed: false, selected: false, hovered: false },
+                { text: 'F', confirmed: false, selected: false, hovered: false },
+                { text: 'G', confirmed: false, selected: false, hovered: false }
+            ]
+        }
+    ]
 }
 
-log('info', 'Configuring server engine...');
-log('info', `port=${process.env.PORT}`);
-app.set('view engine', 'ejs');
-app.set('port', (process.env.PORT && process.env.PORT !== 'undefined') ? process.env.PORT : 3000);
+const logger = createLogger();
+const store = createStore(
+    todoApp,
+    preloadedState,
+    applyMiddleware(thunk, promise, logger)
+);
 
-app.listen(app.get('port'), () => log('info', `Server listening on port ${app.get('port')}...`));
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>
+    , document.getElementById('root'));

@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters, selectStart, selectEnd, moveEnter, moveLeave } from '../actions'
-import AddTodo from '../components/AddTodo'
-import TodoList from '../components/TodoList'
-import Footer from '../components/Footer'
-import WordPanel from '../components/WordPanel'
-import '../app.styl'
+import { addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters, selectStart, selectEnd, moveEnter, moveLeave } from './actions'
+import AddTodo from './components/AddTodo'
+import TodoList from './components/TodoList'
+import Footer from './components/Footer'
+import WordPanel from './components/WordPanel'
 
 class App extends Component {
     render() {
@@ -14,20 +13,6 @@ class App extends Component {
         const { dispatch, visibleTodos, visibilityFilter, grid } = this.props
         return (
             <div>
-                {/*<AddTodo*/}
-                    {/*onAddClick={text =>*/}
-                        {/*dispatch(addTodo(text))*/}
-                    {/*} />*/}
-                {/*<TodoList*/}
-                    {/*todos={visibleTodos}*/}
-                    {/*onTodoClick={index =>*/}
-                        {/*dispatch(toggleTodo(index))*/}
-                    {/*} />*/}
-                {/*<Footer*/}
-                    {/*filter={visibilityFilter}*/}
-                    {/*onFilterChange={nextFilter =>*/}
-                        {/*dispatch(setVisibilityFilter(nextFilter))*/}
-                    {/*} />*/}
                 <WordPanel
                     grid={grid}
                     onMouseDown={(row, col) =>
