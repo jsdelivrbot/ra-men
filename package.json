@@ -1,7 +1,7 @@
 {
-  "name": "react-ssr-template",
+  "name": "ra-men",
   "version": "1.0.0",
-  "description": "Server side rendering template for React 16",
+  "description": "a PWA AMP playground by react",
   "main": "src/index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development babel-node src/index",
@@ -21,8 +21,8 @@
     "ejs"
   ],
   "author": {
-    "name": "Rico Herwig",
-    "email": "rherwig4711@gmail.com"
+    "name": "hydraslay",
+    "email": "xvkai2010@gmail.com"
   },
   "license": "MIT",
   "dependencies": {
