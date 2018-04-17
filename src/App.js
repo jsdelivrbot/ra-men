@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters, selectStart, selectEnd, moveEnter, moveLeave } from './actions'
-import AddTodo from './components/AddTodo'
+import { selectStart, selectEnd, selectMove, selectTodo } from './actions'
 import TodoList from './components/TodoList'
 import Footer from './components/Footer'
 import WordPanel from './components/WordPanel'
@@ -10,7 +9,7 @@ import WordPanel from './components/WordPanel'
 class App extends Component {
     render() {
         // Injected by connect() call:
-        const { dispatch, visibleTodos, visibilityFilter, grid } = this.props
+        const { dispatch, todos, visibilityFilter, grid } = this.props
         return (
             <div>
                 <WordPanel
@@ -21,19 +20,22 @@ class App extends Component {
                     onMouseUp={(row, col) =>
                         dispatch(selectEnd(row, col))
                     }
-                    onMouseEnter={(row, col) =>
-                        dispatch(moveEnter(row, col))
+                    onMouseMove={(row, col) =>
+                        dispatch(selectMove(row, col))
                     }
-                    onMouseLeave={(row, col) =>
-                        dispatch(moveLeave(row, col))
-                    }/>
+                />
+                <TodoList todos={todos}
+                    onSelectTodo={(todo) =>
+                        dispatch(selectTodo(todo))
+                    }
+                />
             </div>
         )
     }
 }
 
 App.propTypes = {
-    visibleTodos: PropTypes.arrayOf(PropTypes.shape({
+    todos: PropTypes.arrayOf(PropTypes.shape({
         text: PropTypes.string.isRequired,
         completed: PropTypes.bool.isRequired
     }).isRequired).isRequired,
@@ -52,22 +54,12 @@ App.propTypes = {
     }).isRequired).isRequired
 }
 
-function selectTodos(todos, filter) {
-    switch (filter) {
-        case VisibilityFilters.SHOW_ALL:
-            return todos
-        case VisibilityFilters.SHOW_COMPLETED:
-            return todos.filter(todo => todo.completed)
-        case VisibilityFilters.SHOW_ACTIVE:
-            return todos.filter(todo => !todo.completed)
-    }
-}
 
 // Which props do we want to inject, given the global state?
 // Note: use https://github.com/faassen/reselect for better performance.
 function select(state) {
     return {
-        visibleTodos: selectTodos(state.todos, state.visibilityFilter),
+        todos: state.todos,
         visibilityFilter: state.visibilityFilter,
         grid: state.grid
     }

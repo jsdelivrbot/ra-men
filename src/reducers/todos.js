@@ -1,7 +1,7 @@
-import { combineReducers } from 'redux'
-import { ADD_TODO, TOGGLE_TODO} from '../actions'
+import { ADD_TODO, TOGGLE_TODO, SELECT_TODO} from '../actions'
 
 function todos(state = [], action) {
+    console.log(state);
     switch (action.type) {
         case ADD_TODO:
             return [
@@ -11,6 +11,9 @@ function todos(state = [], action) {
                     completed: false
                 }
             ]
+        case SELECT_TODO:
+            return state;
+
         case TOGGLE_TODO:
             return [
                 ...state.slice(0, action.index),

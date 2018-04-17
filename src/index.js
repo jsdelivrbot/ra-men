@@ -10,7 +10,16 @@ import App from './App';
 import todoApp from './reducers';
 
 let preloadedState = { 
-    todos: [{}],
+    todos: [
+        {
+            text: 'test',
+            completed: false
+        },
+        {
+            text: 'anotherTest',
+            completed: true
+        }
+    ],
     grid: [
         {
             chars: [

@@ -7,10 +7,15 @@ export default class Alphabeta extends Component {
     render() {
         const colour = this.props.confirmed ? 'lightgray'
                 : this.props.selected ? 'pink'
-                : this.props.hovered ? 'lightblue' : 'lightgreen';
-        const Alphabeta = styled.span`
+                : this.props.hovered ? 'lightpink' : 'lightgreen';
+        const Alphabeta = styled.div`
             background: ${colour};
-            margin: 15px;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            width: 30px;
+            height: 30px;
+            margin: 3px;
             -webkit-touch-callout: none; /* iOS Safari */
             -webkit-user-select: none; /* Safari */
             -khtml-user-select: none; /* Konqueror HTML */
@@ -25,8 +30,7 @@ export default class Alphabeta extends Component {
                 onMouseUp={this.props.onMouseUp}
                 onTouchStart={this.props.onMouseDown}
                 onTouchEnd={this.props.onMouseUp}
-                onMouseEnter={this.props.onMouseEnter}
-                onMouseLeave={this.props.onMouseLeave}
+                onMouseMove={this.props.onMouseMove}
             >
                 {this.props.text}
             </Alphabeta>
@@ -37,8 +41,7 @@ export default class Alphabeta extends Component {
 Alphabeta.propTypes = {
     onMouseDown: PropTypes.func.isRequired,
     onMouseUp: PropTypes.func.isRequired,
-    onMouseEnter: PropTypes.func.isRequired,
-    onMouseLeave: PropTypes.func.isRequired,
+    onMouseMove: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired,
     confirmed: PropTypes.bool.isRequired,
     selected: PropTypes.bool.isRequired,

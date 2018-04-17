@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { SELECT_START, SELECT_END, MOVE_ENTER, MOVE_LEAVE } from '../actions'
+import { SELECT_START, SELECT_END, SELECT_MOVE, MOVE_ENTER, MOVE_LEAVE } from '../actions'
 
 function grid(state = [], action) {
     var result;
@@ -28,28 +28,13 @@ function grid(state = [], action) {
                 }
             })
             break;
-
-        case MOVE_ENTER:
+        case SELECT_MOVE:
+            // console.log(action);
             result = state.map((row, rowIdx) => {
                 return {
                     chars: row.chars.map((cell, colIdx) => {
                         return {
-                            ...cell,
-                            hovered: rowIdx === action.row && colIdx === action.col
-                        }
-                    })
-                }
-            })
-            // console.log(result);
-            break;
-
-        case MOVE_LEAVE:
-            result = state.map((row, rowIdx) => {
-                return {
-                    chars: row.chars.map((cell, colIdx) => {
-                        return {
-                            ...cell,
-                            hovered: rowIdx === action.row && colIdx === action.col ? !cell.hovered : false
+                            ...cell
                         }
                     })
                 }

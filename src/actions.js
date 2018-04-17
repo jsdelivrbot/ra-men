@@ -3,10 +3,12 @@
  */
 
 export const ADD_TODO = 'ADD_TODO';
+export const SELECT_TODO = 'SELECT_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 export const SELECT_START = 'SELECT_START';
 export const SELECT_END = 'SELECT_END';
+export const SELECT_MOVE = 'SELECT_MOVE';
 export const MOVE_ENTER = 'MOVE_ENTER';
 export const MOVE_LEAVE = 'MOVE_LEAVE';
 
@@ -20,9 +22,6 @@ export const VisibilityFilters = {
     SHOW_ACTIVE: 'SHOW_ACTIVE'
 };
 
-/*
- * action 创建函数
- */
 
 export function addTodo(text) {
     return { type: ADD_TODO, text }
@@ -30,6 +29,10 @@ export function addTodo(text) {
 
 export function toggleTodo(index) {
     return { type: TOGGLE_TODO, index }
+}
+
+export function selectTodo(todo) {
+    return { type: SELECT_TODO, todo }
 }
 
 export function setVisibilityFilter(filter) {
@@ -47,6 +50,14 @@ export function selectStart(row, col) {
 export function selectEnd(row, col) {
     return {
         type: SELECT_END,
+        row: row,
+        col: col
+    }
+}
+
+export function selectMove(row, col) {
+    return {
+        type: SELECT_MOVE,
         row: row,
         col: col
     }

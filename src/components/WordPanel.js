@@ -6,7 +6,7 @@ import Alphabeta from './Alphabeta'
 export default class WordPanel extends Component {
     render() {
         const AlphabetaRow = styled.div`
-            line-height: 38px;
+            line-height: 30px;
         `;
         return (
             <div>
@@ -17,8 +17,7 @@ export default class WordPanel extends Component {
                         key={rowIndex + '_' + colIndex}
                         onMouseDown={() => this.props.onMouseDown(rowIndex, colIndex)}
                         onMouseUp={() => this.props.onMouseUp(rowIndex, colIndex)}
-                        onMouseEnter={() => this.props.onMouseEnter(rowIndex, colIndex)}
-                        onMouseLeave={() => this.props.onMouseLeave(rowIndex, colIndex)}
+                        onMouseMove={() => this.props.onMouseMove(rowIndex, colIndex)}
                     />
                 )}
                 </AlphabetaRow>
@@ -31,8 +30,7 @@ export default class WordPanel extends Component {
 WordPanel.propTypes = {
     onMouseDown: PropTypes.func.isRequired,
     onMouseUp: PropTypes.func.isRequired,
-    onMouseEnter: PropTypes.func.isRequired,
-    onMouseLeave: PropTypes.func.isRequired,
+    onMouseMove: PropTypes.func.isRequired,
     grid: PropTypes.arrayOf(PropTypes.shape({
         chars: PropTypes.arrayOf(PropTypes.shape({
             text : PropTypes.string.isRequired,
